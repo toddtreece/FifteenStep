@@ -38,12 +38,16 @@ void midi(byte channel, byte command, byte arg1, byte arg2) {
   trellis.setUSBMIDIchannel(c);
   trellis.setUARTMIDIchannel(c);
 
-  if(command == 0x9)
+  if(command == 0x9) {
     trellis.noteOn(arg1, arg2);
-  else if(command == 0x8)
+  } else if(command == 0x8) {
     trellis.noteOff(arg1, arg2);
-  else
-    trellis.controlChange(command, arg1);
+  } else if(command == 0xF8) {
+    midiEventPacket_t event = {0xF, 0xF8, 0x0, 0x0};
+    MidiUSB.sendMIDI(event);
+  }
+
+  MidiUSB.flush();
 
 }
 

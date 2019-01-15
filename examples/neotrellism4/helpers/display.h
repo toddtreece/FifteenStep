@@ -78,11 +78,11 @@ void noteDisplay(int current) {
 
   FifteenStepNote* _sequence = seq.getSequence();
 
-  for(int i=0; i < length; ++i) {
+  for(int i=length-1; i >0; --i) {
 
     // default state, skip.
     if(_sequence[i].pitch == 0 && _sequence[i].velocity == 0 && _sequence[i].step == 0)
-      continue;
+      return;
 
     // if the current step isn't in the display range, skip
     if(_sequence[i].step < start || _sequence[i].step >= end)
@@ -103,8 +103,6 @@ void noteDisplay(int current) {
 
     if(_sequence[i].velocity != 0)
       trellis.setPixelColor(led, 0xFFFFFF);
-    else
-      trellis.setPixelColor(led, 0x0);
 
   }
 
@@ -117,8 +115,6 @@ void setPlayhead(uint8_t x, boolean set) {
     uint8_t i = xy2i(x, y);
     if(set)
       trellis.setPixelColor(i, 0xFF0000);
-    else
-      trellis.setPixelColor(i, 0x0);
   }
 
 }

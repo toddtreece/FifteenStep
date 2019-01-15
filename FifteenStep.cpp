@@ -793,15 +793,15 @@ void FifteenStep::_triggerNotes()
     return;
 
   // loop through the sequence again and trigger note ons at the current position
-  for(int i=0; i < _sequence_size; ++i)
+  for(int i=_sequence_size-1; i >= 0; --i)
   {
+
+    // if this position is in the default state, we are done
+    if(_sequence[i].pitch == 0 && _sequence[i].velocity == 0 && _sequence[i].step == 0)
+      return;
 
     // ignore if it's not the current position
     if(_sequence[i].step != _position)
-      continue;
-
-    // if this position is in the default state, ignore it
-    if(_sequence[i].pitch == 0 && _sequence[i].velocity == 0 && _sequence[i].step == 0)
       continue;
 
     // send note on values to callback
